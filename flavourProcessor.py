@@ -61,7 +61,6 @@ Hierarchy structure:
 """
 
 import ebooklib
-import pymongo
 from ebooklib import epub
 from bs4 import BeautifulSoup
 
@@ -211,16 +210,6 @@ def output_data(dictionary_object):
     t.write(str(dictionary_object))
     t.close()
     print("Data written to file: {}".format(file_name))
-
-
-def mongo_insert(dictionary_object):
-
-    my_client = pymongo.MongoClient('')
-    my_database = my_client['']
-    my_collection = my_database['']
-
-    x = my_collection.insert_many(dictionary_object)    # TODO: Check that this will be in the appropriate format
-    print(x.inserted_ids)
 
 
 if __name__ == '__main__':
