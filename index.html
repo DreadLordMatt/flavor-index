@@ -10,7 +10,7 @@
   <meta name="msapplication-TileColor" content="#da532c">
   <meta name="theme-color" content="#ffffff">
 
-  <title>Hello World</title>
+  <title>Flavor Index</title>
   
   <!-- css -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.3/css/bulma.css">
@@ -20,13 +20,18 @@
   <script src="https://unpkg.com/vue"></script>
 </head>
 <body>
+
+  <section class="section">
+    <p class="title is-3 is-spaced">The Flavor Index</p>
+    <p class="subtitle is-5">This project is inspired by The Flavor Bible, for more information visit the project on <a href="https://github.com/DreadLordMatt/flavor-index"> GitHub</a>. 
+      Consider purchasing the book direct from the authors at <a href="https://karenandandrew.com/books/the-flavor-bible/">karenandandrew.com</a></p>
+  </section>
+  
   <section id="app" class="section container">
     <h1 class="title">
-      Hi my name is: {{ name }} <br>
-      My message to everyone is: {{ message }}
+      Find an Ingredient: {{ name }} <br>
     </h1>
-    <input type="text" class="input" v-model="name">
-    <input type="text" class="input" v-model="message"> <!-- We can get the ingredient -->
+    <input type="text" class="input" v-model="ingredient">
   </section>
     
   <!-- Vue Components -->
@@ -34,8 +39,10 @@
     const app = new Vue({
       el: '#app',
       data: {
-        name: 'Matt',
-        message: 'hello world'
+        ingredient: 'enter your text'
+      },
+      methods:{
+        
       }
     });
 

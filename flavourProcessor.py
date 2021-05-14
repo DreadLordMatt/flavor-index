@@ -60,6 +60,7 @@ Hierarchy structure:
     
 """
 
+from typing import Counter
 import ebooklib
 from ebooklib import epub
 from bs4 import BeautifulSoup
@@ -95,6 +96,7 @@ def process_book(book_path):
     book = epub.read_epub(book_path)
     my_dict = {}
     chapters = []
+    counter = 0     # Counter for the number or records we are processing.
 
     # This defines the contents of an "active ingredient". # TODO: remove the multiple occurrences with class
     output_dict = {'season': [], 'taste': [], 'function': [], 'weight': [], 'volume': [], 'technique': [], 'tips': [],
@@ -147,6 +149,7 @@ def process_book(book_path):
                         else:
                             my_dict[temp.strip()] = output_dict.copy()  # Write the blank entry
                             output_dict.clear()
+                            counter += 1
                             output_dict = {'season': [], 'taste': [], 'function': [], 'weight': [], 'volume': [],
                                            'technique': [],
                                            'tips': [], 'related ingredients': [], 'flavor affinities': []}
@@ -173,13 +176,14 @@ def process_book(book_path):
                     # TODO: Add processing here to determine the strength of the relationship. this will require a new
                     #  dictionary. Strength ratings are shown in the header (-1, 1, 2, 3, 4).
                     output_dict['related ingredients'].append(child_list)
-
+                    
                 # When the iteration encounters something that isn't an ingredient, like a new active ingredient
                 # it must decide what happens. This is identified by the HTML Class, and the style of the text.
                 if current_type in ['lh1', 'lh'] and next_type in ['lh1', 'lh']:
                     # If it is currently a header, and the next value is going to be a header, write the entry
                     my_dict[active_ingredient] = output_dict.copy()
                     output_dict.clear()
+                    counter += 1
                     output_dict = {'season': [], 'taste': [], 'function': [], 'weight': [], 'volume': [],
                                    'technique': [],
                                    'tips': [], 'related ingredients': [], 'flavor affinities': []}
@@ -187,6 +191,7 @@ def process_book(book_path):
                     # If the next item is a header, write the entry
                     my_dict[active_ingredient] = output_dict.copy()
                     output_dict.clear()
+                    counter += 1
                     output_dict = {'season': [], 'taste': [], 'function': [], 'weight': [], 'volume': [],
                                    'technique': [],
                                    'tips': [], 'related ingredients': [], 'flavor affinities': []}
@@ -194,9 +199,11 @@ def process_book(book_path):
                     # If this is the last item in the chapters list and the last child in the children list, finish.
                     my_dict[active_ingredient] = output_dict.copy()
                     output_dict.clear()
+                    counter += 1
                     output_dict = {'season': [], 'taste': [], 'function': [], 'weight': [], 'volume': [],
                                    'technique': [],
                                    'tips': [], 'related ingredients': [], 'flavor affinities': []}
+                
     return my_dict
 
 
