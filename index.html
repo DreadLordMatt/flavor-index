@@ -29,7 +29,7 @@
   
   <!-- List of all ingredients in the json data -->
   <section id="app" class="section container">
-    <!--  -->
+    <!-- return a list of all the ingredients -->
     <div class="content" v-for="ingredient in ingredients">
       <h4>{{ ingredient.name }}</h4>
       <ul>
@@ -77,14 +77,4 @@
   });
 </script>
 </body>
-<!-- first try at importing using fetch -->
-<!-- const app = new Vue({
-  el: '#app',
-  data: {
-    ingredient: fetch("list2.json")
-    .then(response => response.json())
-    .then(data => ingredient = data)
-    .then(() => console.log(ingredient))
-  },
-  methods: { -->
 </html>
