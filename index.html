@@ -27,25 +27,64 @@
       Consider purchasing the book direct from the authors at <a href="https://karenandandrew.com/books/the-flavor-bible/">karenandandrew.com</a></p>
   </section>
   
+  <!-- List of all ingredients in the json data -->
   <section id="app" class="section container">
-    <h1 class="title">
-      Find an Ingredient: {{ name }} <br>
-    </h1>
-    <input type="text" class="input" v-model="ingredient">
-  </section>
-    
-  <!-- Vue Components -->
-  <script>
-    const app = new Vue({
-      el: '#app',
-      data: {
-        ingredient: 'enter your text'
-      },
-      methods:{
-        
-      }
-    });
+    <!--  -->
+    <div class="content" v-for="ingredient in ingredients">
+      <h4>{{ ingredient.name }}</h4>
+      <ul>
+        <li>Season: {{ ingredient.season }}</li>
+        <li>Taste: {{ ingredient.taste }}</li>
+        <li>Function: {{ ingredient.function }}</li>
+        <li>Weight: {{ ingredient.weight }}</li>
+        <li>Volume: {{ ingredient.volume }}</li>
+        <li>Technique: {{ ingredient.technique }}</li>
+        <li>Tips: {{ ingredient.tips }}</li>
+        <li v-for="item in ingredient.biotanical_relatives">
+          Biotanical relatives: {{ item }}
+        </li>
+        <br>
+        <h5>Flavor Affinities:</h5>
+          <ul>
+            <li v-for="item in ingredient.flavor_affinities">
+              {{ item }}
+            </li>
+          </ul>
+        <h5>Related Ingredients:</h5>
+          <ul>
+            <li v-for="item in ingredient.related_ingredients">
+              {{ item }}
+            </li>
+          </ul>
+      </ul> 
+    </div>
+      </section>
 
-  </script>
+  <!-- Vue Components -->
+<script type="module">
+  var dataURL = './assets/test.json';
+  const app = new Vue({
+    el: '#app',
+    data: {
+      ingredients: []
+    },
+    mounted(){ 
+      var self = this
+      $.getJSON(dataURL, function(data){
+        self.ingredients = data.ingredients
+      });
+    }
+  });
+</script>
 </body>
+<!-- first try at importing using fetch -->
+<!-- const app = new Vue({
+  el: '#app',
+  data: {
+    ingredient: fetch("list2.json")
+    .then(response => response.json())
+    .then(data => ingredient = data)
+    .then(() => console.log(ingredient))
+  },
+  methods: { -->
 </html>
