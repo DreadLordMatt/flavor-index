@@ -64,43 +64,38 @@ from typing import Counter
 import ebooklib
 from ebooklib import epub
 from bs4 import BeautifulSoup
+import json
 
 
 # TODO: rename your shitty variables to ensure readability and clarity.
 # TODO: Make this code OO when you refactor it.
-# class Ingredient:
-#     def __init__(self, name, season, taste, function, weight, volume, technique, tips, pairings, affinities):
-#
-#         self.name = name
-#         self.season = season
-#         self.taste = taste
-#         self.function = function
-#         self.weight = weight
-#         self.volume = volume
-#         self.technique = technique
-#         self.tips = tips
-#         self.pairings = pairings
-#         self.affinities = affinities
-#         self.flavour_affinity = [self.pairings, self.affinities]
-#         self.details = {'season': self.season,
-#                       'taste': self.taste,
-#                       'function': self.function,
-#                       'weight': self.weight,
-#                       'volume': self.volume,
-#                       'technique': self.technique,
-#                       'tips': self.tips,
-#                       'flavour_affinity': self.flavour_affinity}
+class Ingredient():
+    def __init__(self, ingredient_dict):
+        ingredient_dict = {
+            'name': "",
+            'season': "",
+            'taste': "",
+            'function': "",
+            'weight': "",
+            'volume': "",
+            'technique': "",
+            'tips': "",
+            'botanical_relatives': [],
+            'related_ingredients': [],
+            'flavor_affinities': []
+        }
 
 
 def process_book(book_path):
     book = epub.read_epub(book_path)
-    my_dict = {}
+    my_dict = []
     chapters = []
-    counter = 0     # Counter for the number or records we are processing.
+    counter = 0  # Counter for the number or records we are processing.
 
     # This defines the contents of an "active ingredient". # TODO: remove the multiple occurrences with class
-    output_dict = {'season': [], 'taste': [], 'function': [], 'weight': [], 'volume': [], 'technique': [], 'tips': [],
-                   'related ingredients': [], 'flavor affinities': []}
+    output_dict = {'name': "", 'season': "", 'taste': "", 'function': "", 'weight': "", 'volume': "",
+                   'technique': "", 'tips': "", 'botanical_relatives': [],
+                   'related_ingredients': [], 'flavor_affinities': []}
 
     for i, item in enumerate(book.get_items()):  # Looks through the epub for all the items inside
         if item.get_type() == ebooklib.ITEM_DOCUMENT:  # Only process documents, ignore pictures and other junk
@@ -147,79 +142,99 @@ def process_book(book_path):
                             active_ingredient = temp.strip()
                             break
                         else:
-                            my_dict[temp.strip()] = output_dict.copy()  # Write the blank entry
+                            # first use of my_dict
+                            output_dict['name'] = temp.strip()
+                            # my_dict[temp.strip()] = output_dict.copy()  # Write the blank entry
+                            my_dict.append(output_dict.copy())
                             output_dict.clear()
                             counter += 1
-                            output_dict = {'season': [], 'taste': [], 'function': [], 'weight': [], 'volume': [],
-                                           'technique': [],
-                                           'tips': [], 'related ingredients': [], 'flavor affinities': []}
+                            output_dict = {'name': "", 'season': "", 'taste': "", 'function': "", 'weight': "",
+                                           'volume': "",
+                                           'technique': "", 'tips': "", 'botanical_relatives': [],
+                                           'related_ingredients': [], 'flavor_affinities': []}
                 elif current_type in ['lh', 'lh1']:  # if the current item is a header set the active ingredient
                     active_ingredient = child_list.text
 
                 if " + " in current_text:
-                    output_dict['flavor affinities'].append(current_text)
+                    output_dict['flavor_affinities'].append(current_text)
                 elif "Season:" in current_text:
-                    output_dict['season'].append(current_text.replace("Season: ", ""))
+                    output_dict['season'] = (current_text.replace("Season: ", ""))
                 elif "Taste:" in current_text:
-                    output_dict['taste'].append(current_text.replace("Taste: ", ""))
+                    output_dict['taste'] = current_text.replace("Taste: ", "")
+                    # output_dict['taste'].append(current_text.replace("Taste: ", ""))
                 elif "Function:" in current_text:
-                    output_dict['function'].append(current_text.replace("Function: ", ""))
+                    output_dict['function'] = current_text.replace("Function: ", "")
+                    # output_dict['function'].append(current_text.replace("Function: ", ""))
                 elif "Weight:" in current_text:
-                    output_dict['weight'].append(current_text.replace("Weight: ", ""))
+                    output_dict['weight'] = current_text.replace("Weight: ", "")
+                    # output_dict['weight'].append(current_text.replace("Weight: ", ""))
                 elif "Volume:" in current_text:
-                    output_dict['volume'].append(current_text.replace("Volume: ", ""))
+                    output_dict['volume'] = current_text.replace("Volume: ", "")
+                    # output_dict['volume'].append(current_text.replace("Volume: ", ""))
                 elif "Techniques:" in current_text:
-                    output_dict['technique'].append(current_text.replace("Techniques: ", ""))
+                    output_dict['technique'] = current_text.replace("Techniques: ", "")
+                    # output_dict['technique'].append(current_text.replace("Techniques: ", ""))
                 elif "Tips:" in current_text:
-                    output_dict['tips'].append(current_text.replace("Tips: ", ""))
+                    output_dict['tips'] = current_text.replace("Tips: ", "")
+                    # output_dict['tips'].append(current_text.replace("Tips: ", ""))
+                elif "Botanical relatives" in current_text:
+                    output_dict['botanical_relatives'].append(current_text.replace("Botanical relatives: ", ""))
                 elif current_type == 'ul':  # This is the primary iterator action adding ingredients to the list
                     # TODO: Add processing here to determine the strength of the relationship. this will require a new
                     #  dictionary. Strength ratings are shown in the header (-1, 1, 2, 3, 4).
-                    output_dict['related ingredients'].append(child_list)
-                    
+                    output_dict['related_ingredients'].append(child_list.text)
+
                 # When the iteration encounters something that isn't an ingredient, like a new active ingredient
                 # it must decide what happens. This is identified by the HTML Class, and the style of the text.
                 if current_type in ['lh1', 'lh'] and next_type in ['lh1', 'lh']:
                     # If it is currently a header, and the next value is going to be a header, write the entry
-                    my_dict[active_ingredient] = output_dict.copy()
+                    output_dict['name'] = active_ingredient
+                    # my_dict[active_ingredient] = output_dict.copy()
+                    my_dict.append(output_dict.copy())
                     output_dict.clear()
                     counter += 1
-                    output_dict = {'season': [], 'taste': [], 'function': [], 'weight': [], 'volume': [],
-                                   'technique': [],
-                                   'tips': [], 'related ingredients': [], 'flavor affinities': []}
+                    output_dict = {'name': "", 'season': "", 'taste': "", 'function': "", 'weight': "", 'volume': "",
+                                   'technique': "", 'tips': "", 'botanical_relatives': [],
+                                   'related_ingredients': [], 'flavor_affinities': []}
                 elif current_type == 'ul' and next_type in ['lh1', 'lh']:
                     # If the next item is a header, write the entry
-                    my_dict[active_ingredient] = output_dict.copy()
+                    output_dict['name'] = active_ingredient
+                    # my_dict[active_ingredient] = output_dict.copy()
+                    my_dict.append(output_dict.copy())
                     output_dict.clear()
                     counter += 1
-                    output_dict = {'season': [], 'taste': [], 'function': [], 'weight': [], 'volume': [],
-                                   'technique': [],
-                                   'tips': [], 'related ingredients': [], 'flavor affinities': []}
+                    output_dict = {'name': "", 'season': "", 'taste': "", 'function': "", 'weight': "", 'volume': "",
+                                   'technique': "", 'tips': "", 'botanical_relatives': [],
+                                   'related_ingredients': [], 'flavor_affinities': []}
                 elif last_child is True and last_chapter is True:
                     # If this is the last item in the chapters list and the last child in the children list, finish.
-                    my_dict[active_ingredient] = output_dict.copy()
+                    output_dict['name'] = active_ingredient
+                    # my_dict[active_ingredient] = output_dict.copy()
+                    my_dict.append(output_dict.copy())
                     output_dict.clear()
                     counter += 1
-                    output_dict = {'season': [], 'taste': [], 'function': [], 'weight': [], 'volume': [],
-                                   'technique': [],
-                                   'tips': [], 'related ingredients': [], 'flavor affinities': []}
-                
+                    output_dict = {'name': "", 'season': "", 'taste': "", 'function': "", 'weight': "", 'volume': "",
+                                   'technique': "", 'tips': "", 'botanical_relatives': [],
+                                   'related_ingredients': [], 'flavor_affinities': []}
+    print(counter)
     return my_dict
 
 
-def output_data(dictionary_object):
-    # Write the output to a file
-    # TODO: change the output to JSON so we can use this to generate a mongo insert statement
-    # TODO: get an ERD for the mongo DB sorted out before you start crafting any inserts. ensure you have direction
-    file_name = 'list.txt'
-    t = open(file_name, "w")
-    t.truncate()
-    t.write(str(dictionary_object))
-    t.close()
-    print("Data written to file: {}".format(file_name))
+def output_data(dictionary_object, output_type):
+    # Write the output to a file, pick the output type based on what you want to do with it
+    if output_type == 'file':
+        file_name = 'list.txt'
+        t = open(file_name, "w")
+        t.truncate()
+        t.write(str(dictionary_object))
+        t.close()
+        print("Data written to file: {}".format(file_name))
+    elif output_type == 'json':  # Stick this whole list in an ingredients object
+        file_name = 'list2.json'
+        with open(file_name, "w") as out_file:
+            json.dump(dictionary_object, out_file)
 
 
 if __name__ == '__main__':
-
     output = process_book('the_flavor_bible.epub')
-    output_data(output)
+    output_data(output, 'json')
