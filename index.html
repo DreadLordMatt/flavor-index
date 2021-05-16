@@ -29,7 +29,8 @@
   
   <!-- List of all ingredients in the json data -->
   <section id="app" class="section container">
-    <!-- return a list of all the ingredients -->
+
+    <!-- loop through the list and return ingredients -->
     <div class="content" v-for="ingredient in ingredients">
       <h4>{{ ingredient.name }}</h4>
       <ul>
@@ -58,7 +59,7 @@
           </ul>
       </ul> 
     </div>
-      </section>
+  </section>
 
   <!-- Vue Components -->
 <script type="module">
@@ -66,8 +67,10 @@
   const app = new Vue({
     el: '#app',
     data: {
+      // set up an empty array for our json data
       ingredients: []
     },
+    // get the ingredients from the json file => empty array
     mounted(){ 
       var self = this
       $.getJSON(dataURL, function(data){
