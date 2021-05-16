@@ -20,62 +20,73 @@
   <script src="https://unpkg.com/vue"></script>
 </head>
 <body>
-
-  <section class="section">
-    <p class="title is-3 is-spaced">The Flavor Index</p>
-    <p class="subtitle is-5">This project is inspired by The Flavor Bible, for more information visit the project on <a href="https://github.com/DreadLordMatt/flavor-index"> GitHub</a>. 
-      Consider purchasing the book direct from the authors at <a href="https://karenandandrew.com/books/the-flavor-bible/">karenandandrew.com</a></p>
-  </section>
-  
-  <!-- List of all ingredients in the json data -->
   <section id="app" class="section container">
-
-    <!-- loop through the list and return ingredients -->
-    <div class="content" v-for="ingredient in ingredients">
-      <h4>{{ ingredient.name }}</h4>
-      <ul>
-        <li>Season: {{ ingredient.season }}</li>
-        <li>Taste: {{ ingredient.taste }}</li>
-        <li>Function: {{ ingredient.function }}</li>
-        <li>Weight: {{ ingredient.weight }}</li>
-        <li>Volume: {{ ingredient.volume }}</li>
-        <li>Technique: {{ ingredient.technique }}</li>
-        <li>Tips: {{ ingredient.tips }}</li>
-        <li v-for="item in ingredient.biotanical_relatives">
-          Biotanical relatives: {{ item }}
-        </li>
-        <br>
-        <h5>Flavor Affinities:</h5>
-          <ul>
-            <li v-for="item in ingredient.flavor_affinities">
-              {{ item }}
-            </li>
-          </ul>
-        <h5>Related Ingredients:</h5>
-          <ul>
-            <li v-for="item in ingredient.related_ingredients">
-              {{ item }}
-            </li>
-          </ul>
-      </ul> 
+    <div>
+      <p class="title is-3 is-spaced">The Flavor Index</p>
+      <p class="subtitle is-5">This project is inspired by The Flavor Bible, for more information visit the project on <a href="https://github.com/DreadLordMatt/flavor-index"> GitHub</a>. 
+        Consider purchasing the book direct from the authors at <a href="https://karenandandrew.com/books/the-flavor-bible/">karenandandrew.com</a>
+      <br>
+      <br>
+      Use the search bar below to find an ingredient</p>
     </div>
-  </section>
+    <br>  
+    <div class="field is-grouped">
+      <div class="control">
+        <input type="text" class="input" v-model="search" placeholder="Search for an ingredient"> </div>
+    </div>
+    <!-- loop through the list and return ingredients -->
+    <div class="section container">
+      <div class="content" v-for="ingredient in filteredIngredients">
+        <h4>{{ ingredient.name }}</h4>
+        <ul>
+          <li v-if="ingredient.season">Season: {{ ingredient.season }}</li>
+          <li v-if="ingredient.taste">Taste: {{ ingredient.taste }}</li>
+          <li v-if="ingredient.function">Function: {{ ingredient.function }}</li>
+          <li v-if="ingredient.weight">Weight: {{ ingredient.weight }}</li>
+          <li v-if="ingredient.volume">Volume: {{ ingredient.volume }}</li>
+          <li v-if="ingredient.technique">Technique: {{ ingredient.technique }}</li>
+          <li v-if="ingredient.tips">Tips: {{ ingredient.tips }}</li>
+          <h5 v-if="ingredient.botanical_relatives.length">Botanical Relatives:</h5>
+            <ul v-if="ingredient.botanical_relatives">
+              <li v-for="item in ingredient.botanical_relatives">{{ item }}</li>
+            </ul>         
+          <h5 v-if="ingredient.flavor_affinities.length">Flavor Affinities:</h5>
+            <ul v-if="ingredient.flavor_affinities">
+              <li v-for="item in ingredient.flavor_affinities">{{ item }}</li>
+            </ul>
+          <h5 v-if="ingredient.related_ingredients.length">Related Ingredients:</h5>
+            <ul v-if="ingredient.related_ingredients.length">
+              <li v-for="item in ingredient.related_ingredients">{{ item }}</li>
+            </ul>
+        </ul> 
+        <hr>
+      </div>
+    </div>
+</section>
 
   <!-- Vue Components -->
 <script type="module">
-  var dataURL = './assets/test.json';
+  var dataURL = './data/list.json';
   const app = new Vue({
     el: '#app',
     data: {
       // set up an empty array for our json data
-      ingredients: []
+      ingredients: [],
+      search: ''
     },
     // get the ingredients from the json file => empty array
-    mounted(){ 
+    mounted() { 
       var self = this
       $.getJSON(dataURL, function(data){
         self.ingredients = data.ingredients
       });
+    },
+    computed: {
+      filteredIngredients:function(){
+        return this.ingredients.filter((ingredient) => {
+          return ingredient.name.toLowerCase().match(this.search.toLowerCase())
+        });
+      }
     }
   });
 </script>
