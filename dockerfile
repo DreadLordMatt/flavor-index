@@ -3,7 +3,7 @@ FROM node:lts-alpine
 LABEL matt benoit <https://github.com/DreadLordMatt/flavor-index>
 
 # install simple http server for serving static content
-RUN npm install -g http-server
+RUN npm install -g lite-server
 
 # make the 'app' folder the current working directory
 WORKDIR /app
@@ -20,5 +20,5 @@ COPY . .
 # build app for production with minification
 RUN npm run build
 
-EXPOSE 8184
-CMD [ "http-server", "dist" ]
+EXPOSE 3000
+CMD [ "lite-server", "dist" ]

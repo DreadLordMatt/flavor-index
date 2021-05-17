@@ -4,7 +4,8 @@
   "description": "index of ingredients from the flavor bible on a simple web page",
   "main": "index.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "echo 'build script executed'",
+    "test": "lite-server"
   },
   "repository": {
     "type": "git",
