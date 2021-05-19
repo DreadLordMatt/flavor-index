@@ -2,10 +2,9 @@
   "name": "flavor-index",
   "version": "1.0.0-beta",
   "description": "index of ingredients from the flavor bible on a simple web page",
-  "main": "index.html",
+  "main": "dist/index.html",
   "scripts": {
-    "build": "webpack --mode production",
-    "start": "http-server"
+    "build": "http-server"
   },
   "repository": {
     "type": "git",
