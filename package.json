@@ -2,7 +2,7 @@
   "name": "flavor-index",
   "version": "1.0.0-beta",
   "description": "index of ingredients from the flavor bible on a simple web page",
-  "main": "dist/index.html",
+  "main": "index.html",
   "scripts": {
     "build": "http-server"
   },

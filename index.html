@@ -9,7 +9,7 @@
   <link rel="mask-icon" href="assets/favicon/safari-pinned-tab.svg" color="#5bbad5">
   <meta name="msapplication-TileColor" content="#da532c">
   <meta name="theme-color" content="#ffffff">
-  <title>Contact Us</title>
+  <title>The Flavor Index</title>
 
   <!-- css -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.3/css/bulma.css">
@@ -85,6 +85,7 @@
           <li v-if="ingredient.volume">Volume: {{ ingredient.volume }}</li>
           <li v-if="ingredient.technique">Technique: {{ ingredient.technique }}</li>
           <li v-if="ingredient.tips">Tips: {{ ingredient.tips }}</li>
+          <br>
           <h5 v-if="ingredient.botanical_relatives.length">Botanical Relatives:</h5>
             <ul v-if="ingredient.botanical_relatives">
               <li v-for="item in ingredient.botanical_relatives">{{ item }}</li>
