@@ -63,7 +63,9 @@ typings/
 non_published assets/
 The Flavor Bible/
 scratch_files/
+.afdesign
 
 # venv
 venv/
+
 

@@ -2,24 +2,63 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="180x180" href="index/assets/favicon/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="index/assets/favicon/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="index/assets/favicon/favicon-16x16.png">
-  <link rel="manifest" href="index/assets/favicon/site.webmanifest">
-  <link rel="mask-icon" href="index/assets/favicon/safari-pinned-tab.svg" color="#5bbad5">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+  <link rel="manifest" href="assets/favicon/site.webmanifest">
+  <link rel="mask-icon" href="assets/favicon/safari-pinned-tab.svg" color="#5bbad5">
   <meta name="msapplication-TileColor" content="#da532c">
   <meta name="theme-color" content="#ffffff">
+  <title>Contact Us</title>
 
-  <title>Flavor Index</title>
-  
   <!-- css -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.3/css/bulma.css">
+  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
 
   <!-- js -->
   <script src="https://unpkg.com/jquery"></script>
   <script src="https://unpkg.com/vue"></script>
 </head>
 <body>
+      <nav class="navbar bd-navbar navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="./index.html">
+                <img src="./assets/images/slice1@2x.png">
+            </a>
+
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false"
+                data-target="navbarBasicExample">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+
+        <div id="navbarBasicExample" class="navbar-menu">
+            <div class="navbar-start">
+                <!-- <a class="navbar-item"> coming soon... have a simplified page, and a whole list of just the ingredients with clickable links
+            The Index
+          </a> -->
+
+                <a class="navbar-item" target="_blank" rel="noopener noreferrer" href="https://jackcooks.ca">
+                    <p>Affiliated Recipes</p>
+                </a>
+
+                <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+                    href="https://github.com/DreadLordMatt/flavor-index/blob/master/README.md">
+                    <p>Documentation</p>
+                </a>
+    
+                <a class="navbar-item" href="./contact_us.html">
+                    <p>Contact Us</p>
+                </a>
+                <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+                    href="https://github.com/DreadLordMatt/flavor-index/issues">
+                    <p>Report an issue</p>
+                </a>                
+            </div>
+        </div>
+    </nav> 
   <section id="app" class="section container">
     <div>
       <p class="title is-3 is-spaced">The Flavor Index</p>
@@ -66,7 +105,7 @@
 
   <!-- Vue Components -->
 <script type="module">
-  var dataURL = './index/data/list.json';
+  var dataURL = './data/list.json';
   const app = new Vue({
     el: '#app',
     data: {
