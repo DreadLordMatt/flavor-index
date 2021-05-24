@@ -65,6 +65,7 @@ non_published assets/
 The Flavor Bible/
 scratch_files/
 *.afdesign
+index backup.html
 
 # venv
 venv/

@@ -1,134 +1,204 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
-  <link rel="manifest" href="assets/favicon/site.webmanifest">
-  <link rel="mask-icon" href="assets/favicon/safari-pinned-tab.svg" color="#5bbad5">
-  <meta name="msapplication-TileColor" content="#da532c">
-  <meta name="theme-color" content="#ffffff">
-  <title>The Flavor Index</title>
-
-  <!-- css -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.3/css/bulma.css">
-  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
-
-  <!-- js -->
-  <script src="https://unpkg.com/jquery"></script>
-  <script src="https://unpkg.com/vue"></script>
-</head>
-<body>
-      <nav class="navbar bd-navbar navbar" role="navigation" aria-label="main navigation">
-        <div class="navbar-brand">
-            <a class="navbar-item" href="./index.html">
-                <img src="assets/images/slice1@2x.png">
-            </a>
-
-            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false"
-                data-target="navbarBasicExample">
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-            </a>
-        </div>
-
-        <div id="navbarBasicExample" class="navbar-menu">
-            <div class="navbar-start">
-                <!-- <a class="navbar-item"> coming soon... have a simplified page, and a whole list of just the ingredients with clickable links
-            The Index
-          </a> -->
-
-                <a class="navbar-item" target="_blank" rel="noopener noreferrer" href="https://jackcooks.ca">
-                    <p>Affiliated Recipes</p>
-                </a>
-
-                <a class="navbar-item" target="_blank" rel="noopener noreferrer"
-                    href="https://github.com/DreadLordMatt/flavor-index/blob/master/README.md">
-                    <p>Documentation</p>
-                </a>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="msapplication-TileColor" content="#da532c" />
+    <meta name="theme-color" content="#ffffff" />
     
-                <a class="navbar-item" href="./contact_us.html">
-                    <p>Contact Us</p>
-                </a>
-                <a class="navbar-item" target="_blank" rel="noopener noreferrer"
-                    href="https://github.com/DreadLordMatt/flavor-index/issues">
-                    <p>Report an issue</p>
-                </a>                
-            </div>
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png"/>
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png"/>
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png"/>
+    <link rel="manifest" href="assets/favicon/site.webmanifest" />
+    <link rel="mask-icon" href="assets/favicon/safari-pinned-tab.svg" color="#5bbad5"/>
+
+    <title>The Flavor Index</title>
+
+    <!-- css -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <script src="/node_modules/@creativebulma/bulma-collapsible/dist/js/bulma-collapsible.min.js"></script>
+
+    <!-- js -->
+    <script src="https://unpkg.com/jquery"></script>
+    <script src="https://unpkg.com/vue"></script>
+  </head>
+
+  <body>
+    <nav id="navMenu" class="navbar bd-navbar navbar" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+          <a class="navbar-item" href="./index.html">
+            <img src="assets/favicon/android-chrome-192x192.png">
+          </a>
+
+          <!-- data-target="navbar" role="button" aria-label="menu" aria-expanded="false" -->
+
+          <div class="navbar-burger" @click="makeBurger" :class="{ 'is-active': showNav }">
+              <span aria-hidden="true"></span>
+              <span aria-hidden="true"></span>
+              <span aria-hidden="true"></span>
         </div>
-    </nav> 
-  <section id="app" class="section container">
-    <div>
-      <p class="title is-3 is-spaced">The Flavor Index</p>
-      <p class="subtitle is-5">This project is inspired by The Flavor Bible, for more information visit the project on <a href="https://github.com/DreadLordMatt/flavor-index"> GitHub</a>. 
-        Consider purchasing the book direct from the authors at <a href="https://karenandandrew.com/books/the-flavor-bible/">karenandandrew.com</a>
-      <br>
-      <br>
-      Use the search bar below to find an ingredient</p>
+      </div>
+
+      <div  class="navbar-menu" :class="{ 'is-active': showNav }">
+          <div class="navbar-start">             
+              <a class="navbar-item" href="./about.html">
+                  <p>About</p>
+              </a>
+              <a class="navbar-item" target="_blank" rel="noopener noreferrer" href="https://jackcooks.ca">
+                  <p>Affiliated Recipes</p>
+              </a>
+              <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+                  href="https://github.com/DreadLordMatt/flavor-index/issues">
+                  <p>Report an issue</p>
+              </a>                
+              <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+                  href="https://github.com/DreadLordMatt/flavor-index/blob/master/README.md">
+                  <p>Documentation</p>
+              </a>
+          </div>
+      </div>
+    </nav>
+    <div id="app" >
+    <section class="section-container">
+      <div class="card">
+        <div class="card-content">
+          <p class="title is-4 is-spaced">The Flavor Index</p>
+          <p class="subtitle is-5">
+            Search the index of more than 500 ingredients. Find useful flavor
+            combinations, related ingredients, and more. Expand your culinary
+            vocabulary.
+          </p>
+          <div class="field">
+            <div class="control">
+              <input type="text" class="input" v-model="search" placeholder="Try searching for something you cook with often"/>
+            </div>
+          </div>
+        </div>
+      </div>   
+    </section>
+    <div class="section container"> 
+      <!-- loop through the list and return ingredients -->
+      <div class="block" v-for="ingredient in filteredIngredients" >
+        <div class="card">
+            <header class="card-header">
+              <p class="card-header-title">
+                {{ ingredient.name }}
+              </p>
+            </header>
+          <div v-if="hasBody(ingredient)" class="card-content">
+              <ul class="content" >
+                <li v-if="ingredient.season"><strong>Season: </strong>{{ ingredient.season }}</li>
+                <li v-if="ingredient.taste"><strong>Taste: </strong>{{ ingredient.taste }}</li>
+                <li v-if="ingredient.function"><strong>Function: </strong>{{ ingredient.function }}</li>
+                <li v-if="ingredient.weight"><strong>Weight: </strong>{{ ingredient.weight }}</li>
+                <li v-if="ingredient.volume"><strong>Volume: </strong>{{ ingredient.volume }}</li>
+                <li v-if="ingredient.technique"><strong>Technique: </strong>{{ ingredient.technique }}</li>
+                <li v-if="ingredient.tips"><strong>Tips: </strong>{{ ingredient.tips }}</li>
+                <div v-if="hasHeader(ingredient)"><hr></div>
+                <h6 v-if="ingredient.botanical_relatives.length">Botanical Relatives:</h6>
+                <ul v-if="ingredient.botanical_relatives">
+                  <li v-for="item in ingredient.botanical_relatives">{{ item }}</li>
+                </ul>
+                <h6 v-if="ingredient.flavor_affinities.length">Flavor Affinities:</h6>
+                <ul v-if="ingredient.flavor_affinities">
+                  <li v-for="item in ingredient.flavor_affinities">{{ item }}</li>
+                </ul>
+                <h6 v-if="ingredient.related_ingredients.length">Related Ingredients:</h6>
+                  <ul v-if="ingredient.related_ingredients.length">
+                    <li v-for="item in ingredient.related_ingredients">{{ item }}</li>
+                  </ul> 
+              </ul>
+          </div>
+        </div>
+      </div>
     </div>
-    <br>  
-    <div class="field is-grouped">
-      <div class="control">
-        <input type="text" class="input" v-model="search" placeholder="Search for an ingredient"> </div>
-    </div>
-    <!-- loop through the list and return ingredients -->
-    <div class="section container">
-      <div class="content" v-for="ingredient in filteredIngredients">
-        <h4>{{ ingredient.name }}</h4>
-        <ul>
-          <li v-if="ingredient.season">Season: {{ ingredient.season }}</li>
-          <li v-if="ingredient.taste">Taste: {{ ingredient.taste }}</li>
-          <li v-if="ingredient.function">Function: {{ ingredient.function }}</li>
-          <li v-if="ingredient.weight">Weight: {{ ingredient.weight }}</li>
-          <li v-if="ingredient.volume">Volume: {{ ingredient.volume }}</li>
-          <li v-if="ingredient.technique">Technique: {{ ingredient.technique }}</li>
-          <li v-if="ingredient.tips">Tips: {{ ingredient.tips }}</li>
-          <br>
-          <h5 v-if="ingredient.botanical_relatives.length">Botanical Relatives:</h5>
+  </div>
+    <!-- Vue script -->
+    <script type="module">
+      var dataURL = "./data/list.json";
+      const app = new Vue({
+        el: "#app",
+        data: {
+          // set up an empty array for our json data
+          ingredients: [],
+          search: "",
+          counter: 0,
+          header: false,
+          noBody: false
+        },
+        // get the ingredients from the json file => empty array
+        mounted() {
+          var self = this;
+          $.getJSON(dataURL, function (data) {
+            self.ingredients = data.ingredients;
+          });
+        },
+        computed: {
+          filteredIngredients: function () {
+            return this.ingredients.filter((ingredient) => {
+              return ingredient.name
+                .toLowerCase()
+                .match(this.search.toLowerCase());
+            });
+          },
+        },
+        methods: {
+          hasHeader: function(i){
+            var header = false
+            if (i.season.length || i.taste.length || i.function.length || i.weight.length || i.volume.length || i.technique.length || i.tips.length) {
+              header = true
+            return header
+            }
+          },
+          hasBody: function(i) {
+            var noBody = false
+            if (i.related_ingredients.length > 0) {
+              noBody = true
+            }
+            return noBody
+          }
+        }
+      });
+      const navMenu = new Vue({
+        el: "#navMenu",
+        data: {
+          showNav: false
+        },
+        methods: {
+          makeBurger() {
+            this.showNav = !this.showNav
+            return this.showNav
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
+
+
+          <!-- THE REST OF EACH INGREDIENT -->
+         <!-- <button class="button is-link" v-on:click="counter += 1">Add 1</button> -->
+          <!-- <ul>
+            <li v-if="ingredient.season">Season: {{ ingredient.season }}</li>
+            <li v-if="ingredient.taste">Taste: {{ ingredient.taste }}</li>
+            <li v-if="ingredient.function">Function: {{ ingredient.function }}</li>
+            <li v-if="ingredient.weight">Weight: {{ ingredient.weight }}</li>
+            <li v-if="ingredient.volume">Volume: {{ ingredient.volume }}</li>
+            <li v-if="ingredient.technique">Technique: {{ ingredient.technique }}</li>
+            <li v-if="ingredient.tips">Tips: {{ ingredient.tips }}</li>
+            <h5 v-if="ingredient.botanical_relatives.length">Botanical Relatives:</h5>
             <ul v-if="ingredient.botanical_relatives">
               <li v-for="item in ingredient.botanical_relatives">{{ item }}</li>
-            </ul>         
-          <h5 v-if="ingredient.flavor_affinities.length">Flavor Affinities:</h5>
+            </ul>
+            <h5 v-if="ingredient.flavor_affinities.length">Flavor Affinities:</h5>
             <ul v-if="ingredient.flavor_affinities">
               <li v-for="item in ingredient.flavor_affinities">{{ item }}</li>
             </ul>
-          <h5 v-if="ingredient.related_ingredients.length">Related Ingredients:</h5>
-            <ul v-if="ingredient.related_ingredients.length">
-              <li v-for="item in ingredient.related_ingredients">{{ item }}</li>
-            </ul>
-        </ul> 
-        <hr>
-      </div>
-    </div>
-</section>
-
-  <!-- Vue Components -->
-<script type="module">
-  var dataURL = './data/list.json';
-  const app = new Vue({
-    el: '#app',
-    data: {
-      // set up an empty array for our json data
-      ingredients: [],
-      search: ''
-    },
-    // get the ingredients from the json file => empty array
-    mounted() { 
-      var self = this
-      $.getJSON(dataURL, function(data){
-        self.ingredients = data.ingredients
-      });
-    },
-    computed: {
-      filteredIngredients:function(){
-        return this.ingredients.filter((ingredient) => {
-          return ingredient.name.toLowerCase().match(this.search.toLowerCase())
-        });
-      }
-    }
-  });
-</script>
-</body>
-</html>
+            <h5 v-if="ingredient.related_ingredients.length">Related Ingredients:</h5>
+              <ul v-if="ingredient.related_ingredients.length">
+                <li v-for="item in ingredient.related_ingredients">{{ item }}</li>
+              </ul> 
+          </ul>
+          <hr/>-->

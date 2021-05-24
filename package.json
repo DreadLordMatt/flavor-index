@@ -21,9 +21,14 @@
   },
   "homepage": "https://github.com/DreadLordMatt/flavor-index#readme",
   "dependencies": {
+    "@creativebulma/bulma-collapsible": "^1.0.4",
+    "@fortawesome/fontawesome-free": "^5.15.3",
+    "@vue/cli": "^4.5.13",
+    "bulma-accordion": "^2.0.1",
     "emailjs-com": "^2.6.4",
     "http-server": "^0.12.3",
-    "lite-server": "^2.6.1"
+    "lite-server": "^2.6.1",
+    "merge": "^2.1.1"
   },
   "devDependencies": {
     "bulma": "^0.9.2",
