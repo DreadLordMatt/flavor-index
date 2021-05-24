@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="msapplication-TileColor" content="#da532c" />
+        <meta name="theme-color" content="#ffffff" />
+        
+        <!-- Favicons -->
+        <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png"/>
+        <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png"/>
+        <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png"/>
+        <link rel="manifest" href="assets/favicon/site.webmanifest" />
+        <link rel="mask-icon" href="assets/favicon/safari-pinned-tab.svg" color="#5bbad5"/>
+    
+        <title>The Flavor Index</title>
+    
+        <!-- css -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
+        <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+        <script src="/node_modules/@creativebulma/bulma-collapsible/dist/js/bulma-collapsible.min.js"></script>
+    
+        <!-- js -->
+        <script src="https://unpkg.com/jquery"></script>
+        <script src="https://unpkg.com/vue"></script>
+
+    <!-- Mailer  -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function () {
+            // https://dashboard.emailjs.com/admin/integration
+            emailjs.init('user_8WCW7Q8K0WKK3jOvNKPAm');
+        })();
+    </script>
+    <script type="text/javascript">
+        window.onload = function () {
+            document.getElementById('contact-form').addEventListener('submit', function (event) {
+                event.preventDefault();
+                // generate a five digit number for the contact_number variable
+                this.contact_number.value = Math.random() * 100000 | 0;
+                // these IDs from the previous steps
+                emailjs.sendForm('service_3rzupcs', 'template_lghxa4g', this)
+                    .then(function () {
+                        console.log('SUCCESS!');
+                    }, function (error) {
+                        console.log('FAILED...', error);
+                    });
+            });
+        }
+    </script>
+</head>
+<body>
+    <nav id="navMenu" class="navbar bd-navbar navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="./index.html">
+              <img src="assets/favicon/android-chrome-192x192.png">
+            </a>
+  
+            <!-- data-target="navbar" role="button" aria-label="menu" aria-expanded="false" -->
+  
+            <div class="navbar-burger" @click="makeBurger" :class="{ 'is-active': showNav }">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+          </div>
+        </div>
+  
+        <div  class="navbar-menu" :class="{ 'is-active': showNav }">
+            <div class="navbar-start">             
+                <a class="navbar-item" href="./about.html">
+                    <p>About</p>
+                </a>
+                <a class="navbar-item" target="_blank" rel="noopener noreferrer" href="https://jackcooks.ca">
+                    <p>Affiliated Recipes</p>
+                </a>
+                <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+                    href="https://github.com/DreadLordMatt/flavor-index/issues">
+                    <p>Report an issue</p>
+                </a>                
+                <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+                    href="https://github.com/DreadLordMatt/flavor-index/blob/master/README.md">
+                    <p>Documentation</p>
+                </a>
+            </div>
+        </div>
+      </nav>
+    <div class="section container">
+        <div class="content">
+            <h3>About This Project</h3>
+            <p>
+                The objective of this project is to digitize one of my favourite culinary books "The Flavor Bible" by Karen Page and Andrew Dornenburg. The book is excellent and gives insight into improving creativity, enhanceing the eating expierence and impact of a dish. Page and Dornenburg have provided readers with a thorough tool which can be used as a reference while cooking. The book contains some 500 charts, describing the relationship between an ingredient, cuisine, flavor, and taste.
+            </p>
+            <p>
+                Over the last 5 years I've used this book countless times, and finally relented to the nagging voice in my head. The primary issue I've identified is flipping between multiple ingredients as a build out a dish. To combat this, I've presented the book as a web page with search functionality.
+            </p>
+            <p>
+                If you're enjoying this tool, please consider purchasing the book from the authors at 
+                <a href="https://karenandandrew.com/books/the-flavor-bible/">karenandandrew.com</a>
+            </p>
+            <br>
+            
+        </div>
+        <hr>
+        <form id="contact-form">
+            <div class="content">
+                <h3>Contact the Developer</h3>
+                <p>If you like what we're doing, or have questions please send us a message. Issues, up-coming features and release notes can be found on github from the documentation. Please keep in mind this project is developed completely in my spare time. Thanks and enjoy.</p>
+            </div>
+            <input type="hidden" name="contact_number">
+            <div class="field">
+                <label class="label">Your Name</label>
+                <div class="control">
+                    <input class="input" type="text" name="user_name">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Email</label>
+                <div class="control has-icons-left">
+                    <input class="input" type="email" placeholder="Email" name="user_email">
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-envelope"></i>
+                    </span>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Subject</label>
+                <div class="control">
+                    <input class="input" type="text" name="subject">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Message</label>
+                <div class="control">
+                    <textarea class="textarea" name="message" required=""></textarea>
+                </div>
+            </div>
+            <input class="button is-link" type="submit" value="Send">
+        </form>
+    </div>
+    <script>
+        const navMenu = new Vue({
+        el: "#navMenu",
+        data: {
+          showNav: false
+        },
+        methods: {
+          makeBurger() {
+            this.showNav = !this.showNav
+            return this.showNav
+          }
+        }
+      });
+    </script>
+</body>
+</html>
